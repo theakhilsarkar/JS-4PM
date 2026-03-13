@@ -24,7 +24,7 @@ arr.forEach((e) => {
     if (e % 2 == 1) {
         console.log(e)
     }
-})
+});
 
 // console.log(arr)
 
