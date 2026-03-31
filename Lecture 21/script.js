@@ -8,6 +8,8 @@
 // 3. each quotes' card should be different bg. - self.
 // 4. store current index of quote in local storage.
 // 5. add to favourite -> local storage - 
+// 6. remove from fav, and prevent duplicate add in fav.
+
 
 // data generate - 250 quotes with author name in json format
 
@@ -322,8 +324,9 @@ const quotesList = [
 ];
 
 
-const quoteText = document.getElementById("quote-text")
-const authorText = document.getElementById("author-text")
+const quoteText = document.getElementById("quote-text") //  we are fetching an element from index.html which id is quote-text and storing into quoteText
+
+const authorText = document.getElementById("author-text") // ham index.html me se ek element/tag get kar rahe hai jisaki id ka name author-text hai, and use autherText name ke variable me store kar rahe hai.
 
 const btnLike = document.getElementById("btn-like")
 const btnPrev = document.getElementById("btn-prev")
@@ -362,6 +365,30 @@ btnPrev.addEventListener("click", () => {
     displayQuote();
 })
 
+btnLike.addEventListener("click", () => {
+    // array or object -> string -> JSON.stringify(data);
+
+    // to store only one quote
+
+    // const data = quotesList[index];
+    // const str = JSON.stringify(data);
+    // localStorage.setItem("favList", str);
+    // localStorage.setItem("favList", JSON.stringify(quotesList[index]));
+
+    // to store multiple quotes - array
+    const favQuotes = JSON.parse(localStorage.getItem("favList")); // to conver string into object/array
+
+    const res = favQuotes.findIndex((e) => e.quote == quotesList[index].quote);
+
+    if (res == -1) {
+        favQuotes.push(quotesList[index]);
+        localStorage.setItem("favList", JSON.stringify(favQuotes))
+        alert("this quote added in favourite list")
+    } else {
+        alert("quote is already exist !")
+    }
+})
+
 // browser
 // local storage - one type of storage system which store data on browser.
 
@@ -373,3 +400,31 @@ btnPrev.addEventListener("click", () => {
 // localStorage.setItem("data", "1234"); // to store data in local storage
 // const data = localStorage.getItem("data")
 // console.log(data)
+
+
+// {},"[1,2,3]"
+// const res = JSON.stringify({})
+// JSON.parse(data) --> [1,2,3]
+
+// CRUD
+// Create
+// Read
+// Update
+// Delete
+
+// localStorage.setItem("key", "value")
+// localStorage.getItem("key")
+// localStorage.clear(); // clean whole local storage
+// localStorage.removeItem("key");
+
+// [1, 2, 4]
+
+
+// feature = prevent duplicate like
+
+// click
+// fetch from local storage
+// like== all element from local storage
+// if match
+
+
