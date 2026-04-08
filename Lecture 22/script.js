@@ -66,7 +66,26 @@ refresh.addEventListener("click", () => {
     fetchDog();
 })
 
+// API
+// https://www.googleapis.com/books/v1/volumes?q=7habit+intitle:keyes&key=AIzaSyBrAyhQAkp6SkB_p4tgn2OkzaWjhKOJfSw
 
 
+// BASE URL - https://www.googleapis.com/books
+// ROUTES - /v1/volumes
+// q - query (input-request which gives data according to your need.)
+// key - password, secret key, which is allow to access api.
+
+
+
+// Book Cart, name
+// movie search
+
+// bb360562
+
+// base url - https://www.omdbapi.com
+// ? apikey = keyy
+// & t (title) = movie title
+
+// https://www.omdbapi.com/?apikey=bb360562&t=chhava
 
 
