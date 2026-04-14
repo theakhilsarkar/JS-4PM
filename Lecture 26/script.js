@@ -28,10 +28,6 @@
 // console.log(date.getSeconds())
 // console.log(date.getDay())
 
-
-// // Digital Clock
-
-
 const dt = document.getElementById("dt");
 const time = document.getElementById("time");
 
@@ -45,7 +41,7 @@ setInterval(() => {
 // 1. time and date both should be up to date.
 // 2. second must be visible and must be change.
 // 3. show month name and day name in display.
-// 4. show am/pm according to time.
-// 5. change backrground/theme according to time.
+// 4. show am/pm according to time. time<12 ? am : pm, time%12, 23%12 : 12 hours format
+// 5. change backrground/theme according to time. - 
 
 // digital clock - kal tak..
