@@ -225,3 +225,10 @@ opt_box_d.addEventListener('click', () => {
 
 displayQuestion();
 
+
+// all questions display with mcq - minimum 10
+// each question timer - 60 sec.
+// next button -> change question, also reset timer
+// after completing 60s, automatically question change, default ans add - ARRAY.push("E")
+// count socore, and display
+// if score is less than 40%, you're failed, you're passed.
