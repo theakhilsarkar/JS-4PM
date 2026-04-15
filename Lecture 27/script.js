@@ -25,45 +25,45 @@ const questionsList = [
             "detail": "206. Interestingly, babies are actually born with about 300 bones, but many of them fuse together as they grow up!"
         }
     },
-    {
-        "question": "Which is the largest ocean on Earth?",
-        "options": {
-            "A": "Atlantic Ocean",
-            "B": "Indian Ocean",
-            "C": "Arctic Ocean",
-            "D": "Pacific Ocean"
-        },
-        "answer": {
-            "option": "D",
-            "detail": "Pacific Ocean. It covers more than 30% of the Earth's surface, which is even more than all of the Earth's land area combined."
-        }
-    },
-    {
-        "question": "Which gas do plants absorb from the atmosphere to perform photosynthesis?",
-        "options": {
-            "A": "Oxygen",
-            "B": "Nitrogen",
-            "C": "Carbon Dioxide",
-            "D": "Hydrogen"
-        },
-        "answer": {
-            "option": "C",
-            "detail": "Carbon Dioxide. Plants 'breathe in' carbon dioxide and 'breathe out' oxygen, which is exactly the opposite of what humans do!"
-        }
-    },
-    {
-        "question": "Who is known as the 'Father of the Indian Constitution'?",
-        "options": {
-            "A": "Mahatma Gandhi",
-            "B": "Dr. B.R. Ambedkar",
-            "C": "Jawaharlal Nehru",
-            "D": "Sardar Vallabhbhai Patel"
-        },
-        "answer": {
-            "option": "B",
-            "detail": "Dr. B.R. Ambedkar. He was the chairman of the drafting committee and played a key role in writing the rules that govern India."
-        }
-    },
+    // {
+    //     "question": "Which is the largest ocean on Earth?",
+    //     "options": {
+    //         "A": "Atlantic Ocean",
+    //         "B": "Indian Ocean",
+    //         "C": "Arctic Ocean",
+    //         "D": "Pacific Ocean"
+    //     },
+    //     "answer": {
+    //         "option": "D",
+    //         "detail": "Pacific Ocean. It covers more than 30% of the Earth's surface, which is even more than all of the Earth's land area combined."
+    //     }
+    // },
+    // {
+    //     "question": "Which gas do plants absorb from the atmosphere to perform photosynthesis?",
+    //     "options": {
+    //         "A": "Oxygen",
+    //         "B": "Nitrogen",
+    //         "C": "Carbon Dioxide",
+    //         "D": "Hydrogen"
+    //     },
+    //     "answer": {
+    //         "option": "C",
+    //         "detail": "Carbon Dioxide. Plants 'breathe in' carbon dioxide and 'breathe out' oxygen, which is exactly the opposite of what humans do!"
+    //     }
+    // },
+    // {
+    //     "question": "Who is known as the 'Father of the Indian Constitution'?",
+    //     "options": {
+    //         "A": "Mahatma Gandhi",
+    //         "B": "Dr. B.R. Ambedkar",
+    //         "C": "Jawaharlal Nehru",
+    //         "D": "Sardar Vallabhbhai Patel"
+    //     },
+    //     "answer": {
+    //         "option": "B",
+    //         "detail": "Dr. B.R. Ambedkar. He was the chairman of the drafting committee and played a key role in writing the rules that govern India."
+    //     }
+    // },
     // {
     //     "question": "Which of these animals is a mammal but can fly?",
     //     "options": {
@@ -141,66 +141,87 @@ const option_b = document.getElementById("option-b")
 const option_c = document.getElementById("option-c")
 const option_d = document.getElementById("option-d")
 
+const opt_box_a = document.getElementById("opt-box-a")
+const opt_box_b = document.getElementById("opt-box-b")
+const opt_box_c = document.getElementById("opt-box-c")
+const opt_box_d = document.getElementById("opt-box-d")
+
 const next_button = document.getElementById("next-button")
 
 let currentIndex = 0;
 let timeCounter = 5;
+let intervalId;
+let ansList = [];
+let score = 0;
 
 function displayQuestion() {
-    question_index.textContent = "Q. " + (currentIndex + 1);
-    question.textContent = questionsList[currentIndex].question;
+    if (currentIndex > questionsList.length - 1) {
+        console.log("--------")
+        next_button.textContent = "Submit"
+        clearInterval(intervalId);
+    } else {
+        startTimer();
+        question_index.textContent = "Q. " + (currentIndex + 1);
+        question.textContent = questionsList[currentIndex].question;
 
-    option_a.textContent = questionsList[currentIndex].options.A;
-    option_b.textContent = questionsList[currentIndex].options.B;
-    option_c.textContent = questionsList[currentIndex].options.C;
-    option_d.textContent = questionsList[currentIndex].options.D;
+        option_a.textContent = questionsList[currentIndex].options.A;
+        option_b.textContent = questionsList[currentIndex].options.B;
+        option_c.textContent = questionsList[currentIndex].options.C;
+        option_d.textContent = questionsList[currentIndex].options.D;
+    }
 }
 
 next_button.addEventListener("click", () => {
     currentIndex++;
     if (currentIndex < questionsList.length) {
         displayQuestion();
-        if (currentIndex == 9) {
+        if (currentIndex == questionsList.length - 1) {
             next_button.textContent = "Submit";
         }
     } else {
-        alert("All Questions attempted !!");
+        scoreCounter();
+        // alert("All Questions attempted !!");
     }
 })
 
-
-const setTimer = () => {
-    console.log(currentIndex);
-    const timerId = setInterval(() => {
-        timeCounter--;
+// when function call it self - rucursion(infinite), manualy stop
+function startTimer() {
+    clearInterval(intervalId);
+    timeCounter = 5;
+    intervalId = setInterval(() => {
         timer.textContent = timeCounter;
-        if (timeCounter <= 0 || currentIndex >= questionsList.length - 1) {
-            clearInterval(timerId);
-            if (currentIndex < questionsList.length - 1) {
-                currentIndex++;
-                displayQuestion();
-                timeCounter = 5;
-                timer.textContent = timeCounter;
-                setTimer();
-            }
+        timeCounter--;
+        if (timeCounter < 0) {
+            currentIndex++;
+            displayQuestion();
         }
-    }, 1000);
+    }, 1000)
 }
 
-setTimer();
+function scoreCounter() {
+    questionsList.forEach((que, i) => {
+        if (que.answer.option == ansList[i]) {
+            score++;
+        }
+    })
+    console.log(score);
+}
 
-// const stopId = setInterval(() => {
-//     console.log(currentIndex);
-//     setTimer();
-//     if (currentIndex > questionsList.length - 1) {
-//         console.log("stoped..")
-//         clearInterval(stopId)
-//     }
-// }, 5000);
+
+opt_box_a.addEventListener('click', () => {
+    ansList.push("A")
+})
+opt_box_b.addEventListener('click', () => {
+    ansList.push("B")
+})
+opt_box_c.addEventListener('click', () => {
+    ansList.push("C")
+})
+opt_box_d.addEventListener('click', () => {
+    ansList.push("D")
+})
 
 
 
 displayQuestion();
 
-
-// 5 seconds -> after 5 second -> 
