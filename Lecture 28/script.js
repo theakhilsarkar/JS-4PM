@@ -1,22 +1,36 @@
+const productsDivison = document.getElementById("products-div")
 
-// Web Designer | Frontend Web Devloper | Full Stack Web Dev. - MongoDBExpressReactNode | 
-// ecommerce
-// api, local, array & object, DOM - exam
+function addToCart(i) {
+    alert(i)
+}
 
-// api - data
-// display
-// add to cart - localstorage
-// ++,--, total
-// remove
+function displayProducts(products) {
+    products.map((product, i) => {
+        const div = document.createElement("div"); // <div></div>
+        div.className = "card p-0";
+        div.style.width = "18rem";
+        div.innerHTML = `
+                <img src=${product.images[0]}
+                    class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">${product.title}</h5>
+                    <p class="card-text">${product.category}</p>
+                    <p class="card-text fs-5">Price ₹${(product.price * 93).toFixed(2)}/-</p>
+                    <button onclick="addToCart(${i})" class="btn btn-primary">Add to Cart</button>
+                </div>
+            `;
+        productsDivison.appendChild(div);
+    })
+}
 
-// api - url : you can fetch data from the server.
 
-// fetch(url) -> Promise(will come)
-// .then(res) JSON - JSON
+// asyncronous function
+async function fetchProducts() {
+    const res = await fetch("https://dummyjson.com/products");
+    const data = await res.json();
+    displayProducts(data.products)
+}
 
-// fetch("https://dummyjson.com/products") // call
-// .then((res) => res.json()) // to json
-// .then((data) => { // use
-//     console.log(data);
-// })
 
+
+fetchProducts();
