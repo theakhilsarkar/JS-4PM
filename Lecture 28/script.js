@@ -1,11 +1,15 @@
 const productsDivison = document.getElementById("products-div")
 
-function addToCart(i) {
-    alert(i)
+async function addToCart(i) {
+    const res = await fetch("https://dummyjson.com/products")
+    const data = await res.json();
+    const arr = JSON.parse(localStorage.getItem("carts")) || [];
+    arr.push(data.products[i]);
+    localStorage.setItem("carts", JSON.stringify(arr));
 }
 
 function displayProducts(products) {
-    products.map((product, i) => {
+    products.forEach((product, i) => {
         const div = document.createElement("div"); // <div></div>
         div.className = "card p-0";
         div.style.width = "18rem";
@@ -34,3 +38,13 @@ async function fetchProducts() {
 
 
 fetchProducts();
+
+
+// local storage - 10mb - text - string
+
+// localStorage.setItem("key", "value")
+// localStorage.getItem("key")
+
+// const a = [1,2,3]
+// a.push(4)
+// a = [1,2,3,4]
