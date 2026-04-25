@@ -1,7 +1,8 @@
 # Book Store Project Evaluation
 
-## Student Name: Avnish Prajapati
-## Project Title: Book Store
+Student Name: Avnish Prajapati
+
+Project Title: Book Store
 
 | Criteria                                   | Status    | Score |
 |-------------------------------------------|-----------|-------|
@@ -15,7 +16,10 @@ Final Score: 9 / 10
 
 Book Store Project Evaluation
 
+
+
 Student Name: Sahil Dara
+
 Project Title: Book Store
 
 | Criteria                                   | Status    | Score |
