@@ -1,7 +1,7 @@
-Book Store Project Evaluation
+# Book Store Project Evaluation
 
-Student Name: Avnish Prajapati
-Project Title: Book Store
+## Student Name: Avnish Prajapati
+## Project Title: Book Store
 
 | Criteria                                   | Status    | Score |
 |-------------------------------------------|-----------|-------|
