@@ -27,9 +27,10 @@ const input_filter_status = document.getElementById("input-filter-status");
 const input_filter_button = document.getElementById("input-filter-button");
 
 const task_display_box = document.getElementById("task-display-box");
+let task_list = [];
 
 const fetchTaskListFromLocalStorage = () => {
-  return JSON.parse(localStorage.getItem("task-list")) || [];
+  task_list = JSON.parse(localStorage.getItem("task-list")) || [];
 };
 
 const updateTaskListInLocalStorage = (task_list) => {
@@ -47,15 +48,20 @@ const handleAddTask = () => {
   displayTasks();
 };
 
+const handleChangeStatus = (i) => {
+  task_list[i].status = !task_list[i].status;
+  updateTaskListInLocalStorage(task_list);
+  displayTasks();
+};
+
 const displayTasks = () => {
-  const task_list = fetchTaskListFromLocalStorage();
   task_display_box.innerHTML = "";
   task_list.map((task, i) => {
     const div = document.createElement("div");
     div.classList = `d-flex w-75 justify-content-between m-3 shadow p-3 rounded border ${task.priority == "high" ? "border-danger" : task.priority == "low" ? "border-success" : "border-warning"}`;
     div.innerHTML = `
-          <input type="checkbox" style="height:30px; width:30px"/>
-          <div class=" ms-2 w-50">${task.task}</div>
+          <input ${task.status ? "checked" : ""} type="checkbox" style="height:30px; width:30px" oninput="handleChangeStatus(${i})"/>
+          <div class="ms-2 w-50 ${task.status ? "text-decoration-line-through" : ""}">${task.task}</div>
           <div class="w-50 d-flex gap-2 justify-content-end align-content-center">
             <button class="btn btn-warning">Edit</button>
             <button onClick="handleRemoveTask(${i})" class="btn btn-danger">Delete</button>
@@ -66,11 +72,24 @@ const displayTasks = () => {
 };
 
 const handleRemoveTask = (i) => {
-  const task_list = fetchTaskListFromLocalStorage();
   task_list.splice(i, 1);
   updateTaskListInLocalStorage(task_list);
+  fetchTaskListFromLocalStorage();
+  displayTasks();
+};
+
+const handlePriorityFilter = () => {
+  const priority = input_filter_priority.value;
+  fetchTaskListFromLocalStorage();
+  if (priority == "all") {
+    fetchTaskListFromLocalStorage();
+  } else {
+    task_list = task_list.filter((task) => task.priority == priority);
+  }
   displayTasks();
 };
 
 input_add_button.addEventListener("click", handleAddTask);
+input_filter_button.addEventListener("click", handlePriorityFilter);
+fetchTaskListFromLocalStorage();
 displayTasks();
